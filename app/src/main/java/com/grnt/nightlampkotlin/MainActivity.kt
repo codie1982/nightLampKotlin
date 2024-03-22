@@ -3,7 +3,7 @@ package com.grnt.nightlampkotlin
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import com.grnt.nightlampkotlin.model.NodemCuServices
+import com.grnt.nightlampkotlin.model.LambServices
 import com.grnt.nightlampkotlin.model.Response
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
 
-        val services = retrofit.create(NodemCuServices::class.java)
+        val services = retrofit.create(LambServices::class.java)
 
         btnLedOpen.setOnClickListener { view ->
             run {
