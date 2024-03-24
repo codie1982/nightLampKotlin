@@ -1,12 +1,12 @@
-package com.grnt.nightlampkotlin.di.view
+package com.grnt.nightlampkotlin.di.view.tab_main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.grnt.nightlampkotlin.R
 
-class StepTwo : AppCompatActivity() {
+class TabMainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_step_two)
+        setContentView(R.layout.activity_tab_main)
     }
 }

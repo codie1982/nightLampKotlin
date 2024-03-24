@@ -1,6 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/main_navigation">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/mainActivity">
 
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.grnt.nightlampkotlin.MainActivity"
+        android:label="activity_main"
+        tools:layout="@layout/activity_main" />
+    <activity
+        android:id="@+id/setupConnection"
+        android:name="com.grnt.nightlampkotlin.di.view.setup_screen.SetupConnection"
+        android:label="activity_setup_connection"
+        tools:layout="@layout/activity_setup_connection" />
+    <fragment
+        android:id="@+id/stepOneFragment"
+        android:name="com.grnt.nightlampkotlin.di.view.setup_screen.StepOneFragment"
+        android:label="fragment_step_one"
+        tools:layout="@layout/fragment_step_one" >
+        <action
+            android:id="@+id/action_stepOneFragment_to_stepTwoFragment"
+            app:destination="@id/stepTwoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/stepTwoFragment"
+        android:name="com.grnt.nightlampkotlin.di.view.setup_screen.StepTwoFragment"
+        android:label="fragment_step_two"
+        tools:layout="@layout/fragment_step_two" >
+        <action
+            android:id="@+id/action_stepTwoFragment_to_stepThreeFragment"
+            app:destination="@id/stepThreeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/stepThreeFragment"
+        android:name="com.grnt.nightlampkotlin.di.view.setup_screen.StepThreeFragment"
+        android:label="fragment_step_three"
+        tools:layout="@layout/fragment_step_three" >
+        <action
+            android:id="@+id/action_stepThreeFragment_to_stepFourFragment"
+            app:destination="@id/stepFourFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/stepFourFragment"
+        android:name="com.grnt.nightlampkotlin.di.view.setup_screen.StepFourFragment"
+        android:label="fragment_step_four"
+        tools:layout="@layout/fragment_step_four" >
+        <action
+            android:id="@+id/action_stepFourFragment_to_stepFiveFragment"
+            app:destination="@id/stepFiveFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/stepFiveFragment"
+        android:name="com.grnt.nightlampkotlin.di.view.setup_screen.StepFiveFragment"
+        android:label="fragment_step_five"
+        tools:layout="@layout/fragment_step_five" />
 </navigation>

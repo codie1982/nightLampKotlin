@@ -1,13 +1,12 @@
-package com.grnt.nightlampkotlin.di.view
+package com.grnt.nightlampkotlin.di.view.setup_screen
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.grnt.nightlampkotlin.BaseActivity
 import com.grnt.nightlampkotlin.R
 
-class StepOne : BaseActivity() {
+class SetupConnection : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_step_one)
+        setContentView(R.layout.activity_setup_connection)
     }
 }

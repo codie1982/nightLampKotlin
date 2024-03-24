@@ -54,7 +54,6 @@ class MainActivity : BaseActivity() {
     lateinit var btnLedOpen: Button
     lateinit var btnLedClose: Button
     private lateinit var wifiScanReceiver:BroadcastReceiver
-    val BASEURL = "http://192.168.1.82"
 
     private lateinit var mWifip2pManager: WifiP2pManager
     private lateinit var mChannel:WifiP2pManager.Channel
@@ -69,7 +68,7 @@ class MainActivity : BaseActivity() {
         mWifip2pManager = getSystemService(Context.WIFI_P2P_SERVICE) as WifiP2pManager
         mChannel = mWifip2pManager.initialize(this, Looper.getMainLooper(),null)
 
-        //requestMyNetwork();
+
         mBroadcastReceiver = WifiBroadcastRecevier(mWifip2pManager,mChannel,this)
 
         intentFilter = IntentFilter()
@@ -79,76 +78,20 @@ class MainActivity : BaseActivity() {
         intentFilter.addAction(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION)
 
 
-        if(!wifiManager.isWifiEnabled){
-
-        }else{
-            wifiScanReceiver = object : BroadcastReceiver(){
-                @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-                override fun onReceive(p0: Context?, p1: Intent?) {
-                    val success = intent.getBooleanExtra(WifiManager.EXTRA_RESULTS_UPDATED, false)
-                    if (success) {
-                        scanSuccess()
-                    } else {
-                        scanFailure()
-                    }
-                }
-            }
-        }
 
 
-        val intentFilter = IntentFilter()
-        intentFilter.addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION)
-        registerReceiver(wifiScanReceiver, intentFilter)
 
 
-        btnLedOpen.setOnClickListener { view ->
-            run {
 
-                val nodemCuServices = services.ledOn()
 
-                nodemCuServices.enqueue(object : Callback<Response>{
-                    override fun onResponse(
-                        call: Call<Response>,
-                        response: retrofit2.Response<Response>
-                    ) {
-                       println("ledOn onResponse " + response.body()?.led)
-                    }
-
-                    override fun onFailure(call: Call<Response>, t: Throwable) {
-                        println("ledOn  onFailure")
-                    }
-
-                })
-            }
-        }
-        btnLedClose.setOnClickListener { view ->
-            run {
-                val call = services.ledOff()
-                call.enqueue(object : Callback<Response>{
-                    override fun onResponse(
-                        call: Call<Response>,
-                        response: retrofit2.Response<Response>
-                    ) {
-                        println("ledOff onResponse " + response.body()?.led)
-
-                    }
-
-                    override fun onFailure(call: Call<Response>, t: Throwable) {
-                        println("ledOff  onFailure")
-                    }
-                })
-            }
-        }
     }
 
     override fun onResume() {
         super.onResume()
-        registerReceiver(mBroadcastReceiver,intentFilter)
     }
 
     override fun onPause() {
         super.onPause()
-        unregisterReceiver(mBroadcastReceiver)
     }
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun scanFailure() {
@@ -257,7 +200,6 @@ class MainActivity : BaseActivity() {
                             ADD_WIFI_RESULT_ALREADY_EXISTS ->{
 
                                 println("ADD_WIFI_RESULT_ALREADY_EXISTS - Something went wrong - invalid configuration")
-                                requestMyNetwork()
                             }
 
                         else ->
@@ -270,22 +212,6 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    private fun requestMyNetwork() {
-        setupRetrofit("http://192.168.4.1");
-             var connectionCall = services.setConnection()
-             connectionCall.enqueue(object : Callback<ConnectionResponse>{
-                 override fun onResponse(
-                     call: Call<ConnectionResponse>,
-                     response: retrofit2.Response<ConnectionResponse>
-                 ) {
-                        println("Baglanti : " + response.body()?.isConnect)
-                        println("IP No : " + response.body()?.ip)
-                 }
-                 override fun onFailure(call: Call<ConnectionResponse>, t: Throwable) {
-                        println("Baglanti Basarisiz")
-                 }
-             })
-    }
 
 
     private fun scanSuccess() {
@@ -293,27 +219,5 @@ class MainActivity : BaseActivity() {
         //wifiManager.scanResults()
     }
 
-    private fun setupRetrofit(baseUrl:String) {
-        val moshi: Moshi = Moshi.Builder()
-            .add(KotlinJsonAdapterFactory())
-            .build()
-
-        val loggingInterceptor =
-            HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
-
-
-        val client: OkHttpClient = OkHttpClient.Builder()
-            .addInterceptor(loggingInterceptor)
-            .build()
-
-        val retrofit: Retrofit = Retrofit.Builder()
-            .client(client)
-            .baseUrl(baseUrl)
-            .addConverterFactory(GsonConverterFactory.create())
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .build()
-
-        services =  retrofit.create(LambServices::class.java)
-    }
 }
 

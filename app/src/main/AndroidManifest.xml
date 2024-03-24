@@ -29,19 +29,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".di.view.StepFive"
-            android:exported="false" />
-        <activity
-            android:name=".di.view.StepFour"
-            android:exported="false" />
-        <activity
-            android:name=".di.view.StepThree"
-            android:exported="false" />
-        <activity
-            android:name=".di.view.StepTwo"
-            android:exported="false" />
-        <activity
-            android:name=".di.view.StepOne"
+            android:name=".di.view.tab_main.TabMainActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
@@ -52,6 +40,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".di.view.setup_screen.SetupConnection"
+            android:exported="false" />
     </application>
 
 </manifest>
