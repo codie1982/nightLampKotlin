@@ -57,6 +57,8 @@ dependencies {
     implementation("com.squareup.moshi:moshi:1.15.0")
 
     implementation("com.squareup.moshi:moshi-kotlin:1.14.0")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
 
     ksp("com.squareup.moshi:moshi-kotlin-codegen:1.14.0")
 

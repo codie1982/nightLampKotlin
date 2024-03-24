@@ -7,6 +7,9 @@ interface LambServices {
     @GET("/")
     open fun getInfo(): Call<Response>
 
+    @GET("/connection")
+    open fun setConnection(): Call<ConnectionResponse>
+
     @GET("/ledon")
     open fun ledOn(): Call<Response>
 
