@@ -6,10 +6,10 @@ import com.grnt.nightlampkotlin.di.DependencyInjection
 import com.grnt.nightlampkotlin.di.DependencyInjectionImplementation
 
 class App :Application() {
-    val BASEURL = "http://192.168.1.82"
     val di: DependencyInjection by lazy {
-        DependencyInjectionImplementation(BASEURL)
+        DependencyInjectionImplementation()
     }
 }
+
 val Context.di: DependencyInjection
     get() = (this.applicationContext as App).di

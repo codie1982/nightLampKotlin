@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menuColor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:icon="@drawable/baseline_color_lens_24"
+        android:title="Color" />
+    <item
+        android:id="@+id/menuCalender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:icon="@drawable/baseline_calendar_view_week_24"
+        android:title="Calender" />
+    <item
+        android:id="@+id/menuAnimation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:icon="@drawable/baseline_animation_24"
+        android:title="Animation" />
+</menu>

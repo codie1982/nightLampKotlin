@@ -30,11 +30,24 @@ import android.provider.Settings.ADD_WIFI_RESULT_ALREADY_EXISTS
 import android.provider.Settings.ADD_WIFI_RESULT_SUCCESS
 import android.provider.Settings.EXTRA_WIFI_NETWORK_LIST
 import android.provider.Settings.EXTRA_WIFI_NETWORK_RESULT_LIST
+import android.view.View
+import android.view.View.OnClickListener
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.Button
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationBarView
+import com.grnt.nightlampkotlin.di.view.tab_main.AnimatedColorFragment
+import com.grnt.nightlampkotlin.di.view.tab_main.ColorFragment
+import com.grnt.nightlampkotlin.di.view.tab_main.TabMainActivity
+import com.grnt.nightlampkotlin.di.view.tab_main.WeeklyColorFragment
 import com.grnt.nightlampkotlin.model.ConnectionResponse
+import com.grnt.nightlampkotlin.model.LambRepository
 import com.grnt.nightlampkotlin.model.LambServices
 import com.grnt.nightlampkotlin.model.Response
 import com.squareup.moshi.Moshi
@@ -46,24 +59,26 @@ import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
+import java.nio.channels.SelectableChannel
 
 
 class MainActivity : BaseActivity() {
+    var repository: LambRepository? = null
+
     private lateinit var wifiManager: WifiManager
-    private lateinit var services: LambServices
-    lateinit var btnLedOpen: Button
-    lateinit var btnLedClose: Button
+    lateinit var btnControl :Button
     private lateinit var wifiScanReceiver:BroadcastReceiver
 
     private lateinit var mWifip2pManager: WifiP2pManager
     private lateinit var mChannel:WifiP2pManager.Channel
     private lateinit var mBroadcastReceiver: BroadcastReceiver
     private lateinit var intentFilter:IntentFilter
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        btnLedOpen = findViewById(R.id.btnLedOpen)
-        btnLedClose = findViewById(R.id.btnLedClose)
+        btnControl = findViewById(R.id.btnControl)
         wifiManager = applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
         mWifip2pManager = getSystemService(Context.WIFI_P2P_SERVICE) as WifiP2pManager
         mChannel = mWifip2pManager.initialize(this, Looper.getMainLooper(),null)
@@ -76,15 +91,46 @@ class MainActivity : BaseActivity() {
         intentFilter.addAction(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION)
         intentFilter.addAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION)
         intentFilter.addAction(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION)
-
-
-
-
-
-
-
-
+        repository = di.repository
+        setOnClickListener()
+        //sendMainTabScreen()
     }
+
+    private fun setOnClickListener() {
+
+     btnControl.setOnClickListener(object : OnClickListener{
+         override fun onClick(v: View?) {
+             var isFail : Boolean = false
+          var nums = arrayOf(1,2,3,4)
+             for(num in nums){
+                 var url = "http://198.162.1.$num"
+                 di.changeBaseURL(url)
+                 var _info = di.repository.getInfo()
+                 _info.enqueue(object : Callback<Response>{
+                     override fun onResponse(call: Call<Response>, response: retrofit2.Response<Response>) {
+
+                         println("onResponse isSuccessful -" + response.isSuccessful)
+                         println("onResponse errorBody - " + response.errorBody())
+                         println("onResponse raw - " + response.raw())
+                         println("onResponse headers - " + response.headers())
+
+                     }
+                     override fun onFailure(call: Call<Response>, t: Throwable) {
+                         println("onFailure : " + call.request().url)
+                         println("onFailure : " + call.request().headers)
+                         println("onFailure")
+                     }
+                 })
+             }
+         }
+     })
+    }
+
+    private fun sendMainTabScreen() {
+        var intent = Intent(this@MainActivity,TabMainActivity::class.java)
+        startActivity(intent)
+    }
+
 
     override fun onResume() {
         super.onResume()

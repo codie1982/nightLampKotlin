@@ -12,14 +12,18 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 interface DependencyInjection {
+    val BASEURL:String
     val repository: LambRepository
     fun setBaseURL(BASEURL: String)
     fun changeBaseURL(BASEURL: String)
 }
 
 class DependencyInjectionImplementation() : DependencyInjection {
-    private lateinit var BASEURL:String
+    override var BASEURL:String = "http://192.168.4.1"
     override lateinit var repository: LambRepository
+    init {
+        setupRetrofit()
+    }
     override fun setBaseURL(BASEURL: String) {
         this.BASEURL = BASEURL
     }
@@ -29,7 +33,7 @@ class DependencyInjectionImplementation() : DependencyInjection {
     }
 
     private fun setupRetrofit(){
-        if(BASEURL !=null){
+
             val moshi: Moshi = Moshi.Builder()
                 .add(KotlinJsonAdapterFactory())
                 .build()
@@ -52,9 +56,7 @@ class DependencyInjectionImplementation() : DependencyInjection {
             val services =  retrofit.create(LambServices::class.java)
 
             repository = LambRepository(services)
-        }
+
     }
-    init {
-        setupRetrofit()
-    }
+
 }

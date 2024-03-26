@@ -5,8 +5,8 @@ import retrofit2.Call
 import retrofit2.http.GET
 
 interface LambServices {
-    @GET("/")
-    open fun getInfo(): Call<Response>
+    @GET("/info")
+    open fun checkInfo(): Call<Response>
 
     @GET("/connection")
     open fun setConnection(): Call<ConnectionResponse>

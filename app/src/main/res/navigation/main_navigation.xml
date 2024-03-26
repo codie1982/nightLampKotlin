@@ -56,4 +56,24 @@
         android:name="com.grnt.nightlampkotlin.di.view.setup_screen.StepFiveFragment"
         android:label="fragment_step_five"
         tools:layout="@layout/fragment_step_five" />
+    <activity
+        android:id="@+id/tabMainActivity"
+        android:name="com.grnt.nightlampkotlin.di.view.tab_main.TabMainActivity"
+        android:label="activity_tab_main"
+        tools:layout="@layout/activity_tab_main" />
+    <fragment
+        android:id="@+id/animatedColorFragment"
+        android:name="com.grnt.nightlampkotlin.di.view.tab_main.AnimatedColorFragment"
+        android:label="fragment_animated_color"
+        tools:layout="@layout/fragment_animated_color" />
+    <fragment
+        android:id="@+id/weeklyColorFragment"
+        android:name="com.grnt.nightlampkotlin.di.view.tab_main.WeeklyColorFragment"
+        android:label="fragment_weekly"
+        tools:layout="@layout/fragment_weekly" />
+    <fragment
+        android:id="@+id/colorFragment"
+        android:name="com.grnt.nightlampkotlin.di.view.tab_main.ColorFragment"
+        android:label="fragment_color"
+        tools:layout="@layout/fragment_color" />
 </navigation>
