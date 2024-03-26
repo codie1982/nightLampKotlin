@@ -1,6 +1,8 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.devtools.ksp") version "1.9.0-1.0.13" // Or latest version of KSP
+
 }
 
 android {
@@ -51,7 +53,14 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
     implementation("com.squareup.okhttp3:okhttp:4.11.0")
     implementation("com.ww:roxie:0.5.0")
+
     implementation("com.squareup.moshi:moshi:1.15.0")
+
+    implementation("com.squareup.moshi:moshi-kotlin:1.14.0")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
+
+    ksp("com.squareup.moshi:moshi-kotlin-codegen:1.14.0")
 
     implementation("io.reactivex.rxjava3:rxandroid:3.0.2")
     implementation("io.reactivex.rxjava3:rxjava:3.1.8")
